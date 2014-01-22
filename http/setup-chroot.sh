@@ -1,35 +1,70 @@
 #!/bin/sh
 set -ex
 
-echo arch64.local > /etc/hostname
+# Hostname
+# TODO: arch_x32/64
+echo arch.local > /etc/hostname
 
-echo 'Server = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+# Timezone
+ln -s /usr/share/zoneinfo/Europe/Kiev /etc/localtime
 
-ln -s /usr/share/zoneinfo/Japan /etc/localtime
-sed -i.bak -e 's/#\(en_US.UTF-8.*\)/\1/' /etc/locale.gen
-rm /etc/locale.gen.bak
+# Locale
+cat > /etc/locale.conf <<EOF
+LANG="en_US.UTF-8"
+LC_COLLATE="C"
+EOF
+sed -i -e 's/^#\(en_US.UTF-8.*\)/\1/' /etc/locale.gen
 locale-gen
 
-# yaourt
-cat >> /etc/pacman.conf <<EOF
-[archlinuxfr]
-SigLevel = Never
-Server = http://repo.archlinux.fr/\$arch
-EOF
-pacman -Sy --noconfirm yaourt
-
-# For vagrant
+# Vagrant
+pacman -S --noconfirm sudo
 echo -e 'vagrant\nvagrant\n' | passwd
-useradd -m vagrant
+useradd -m -g users vagrant
 echo -e 'vagrant\nvagrant\n' | passwd vagrant
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 chmod 0440 /etc/sudoers.d/vagrant
 
-# For ssh
-dhcpcd_txt=/root/dhcpcd.txt
-systemctl enable sshd.service
-systemctl enable $(head -1 $dhcpcd_txt)
+# Network
+# disable persistent network names
+ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+systemctl enable dhcpcd@eth0
 
-mkinitcpio -p linux
-grub-install --target=i386-pc --recheck /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
+# SSH
+pacman -S --noconfirm openssh
+# Make sure SSH is allowed
+echo "sshd: ALL" > /etc/hosts.allow
+# And everything else isn't
+echo "ALL: ALL" > /etc/hosts.deny
+# Make sure sshd starts on boot
+systemctl enable sshd
+/usr/bin/sed -i 's/#UseDNS yes/UseDNS no/' /etc/ssh/sshd_config
+
+# Bootloader
+pacman -S --noconfirm syslinux
+cp -r /usr/lib/syslinux/bios/* /boot/syslinux
+extlinux --install /boot/syslinux
+printf "\x2" | cat /usr/lib/syslinux/bios/altmbr.bin - | \
+  dd bs=440 count=1 iflag=fullblock conv=notrunc of=/dev/sda
+
+cat > /boot/syslinux/syslinux.cfg <<EOF
+DEFAULT arch
+PROMPT 0
+TIMEOUT 10
+
+UI menu.c32
+MENU TITLE Arch Linux
+MENU HIDDEN
+MENU AUTOBOOT
+
+LABEL arch
+MENU LABEL Arch Linux
+LINUX ../vmlinuz-linux
+APPEND root=/dev/sda2 rw quiet loglevel=0 vga=current
+INITRD ../initramfs-linux.img
+
+LABEL archfallback
+MENU LABEL Arch Linux Fallback
+LINUX ../vmlinuz-linux
+APPEND root=/dev/sda2 rw
+INITRD ../initramfs-linux-fallback.img
+EOF

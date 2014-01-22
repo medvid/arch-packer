@@ -3,26 +3,58 @@ set -ex
 http_root="$1"
 shift
 
-sgdisk --new 1::+1m --typecode 1:ef02 --new 2::+100m --new 3 /dev/sda
-mkfs.ext4 /dev/sda2
-mkfs.ext4 /dev/sda3
-mount /dev/sda3 /mnt
-mkdir /mnt/boot
-mount /dev/sda2 /mnt/boot
+# set preferred mirror
+# passed to sed expression, so should escape '/' and '$'
+MIRROR="http:\/\/ftp.linux.kiev.ua\/pub\/Linux\/ArchLinux\/\$repo\/os\/\$arch"
 
-#cp /etc/pacman.d/mirrorlist /tmp/mirrorlist
-#rankmirrors -n 3 /tmp/mirrorlist > /etc/pacman.d/mirrorlist
-echo 'Server = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-pacstrap /mnt base grub sudo openssh
-genfstab -U -p /mnt >> /mnt/etc/fstab
+# size of swap partition
+SWAPSIZE=512M
+
+# partitioning
+# /dev/sda1 swap SWAPSIZE
+fdisk /dev/sda <<EOF
+o
+n
+p
+1
+
++$SWAPSIZE
+t
+82
+n
+p
+2
+
+
+t
+2
+83
+w
+EOF
+
+# format partitions
+mkswap -L swap /dev/sda1
+mkfs.ext4 -m 1 -q -L root /dev/sda2
+
+# mount partitions
+swapon /dev/sda1
+mount /dev/sda2 /mnt
+
+# insert preferred mirror after the first empty line in mirrorlist
+sed -i "0,/^$/s//\nServer = $MIRROR\n/" /etc/pacman.d/mirrorlist
+
+pacstrap /mnt base
+genfstab -p /mnt >> /mnt/etc/fstab
 
 setup_chroot=/root/setup-chroot.sh
-dhcpcd_txt=/root/dhcpcd.txt
 curl -o /mnt/$setup_chroot "$http_root/setup-chroot.sh"
 chmod +x /mnt/$setup_chroot
-systemctl list-units | awk '/dhcpcd/{print $1}' > /mnt/$dhcpcd_txt
 arch-chroot /mnt $setup_chroot
 
 rm /mnt/$setup_chroot
-rm /mnt/$dhcpcd_txt
+
+# unmount partitions
+umount /mnt
+swapoff /dev/sda1
+
 reboot
