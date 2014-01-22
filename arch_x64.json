@@ -1,0 +1,46 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "ArchLinux_64",
+      "iso_url": "http://ftp.linux.kiev.ua/pub/Linux/ArchLinux/iso/2014.01.05/archlinux-2014.01.05-dual.iso",
+      "iso_checksum": "4d43709987c3cf19059195f9450465de3b87a5cb",
+      "iso_checksum_type": "sha1",
+      "disk_size": 8000,
+      "guest_additions_mode": "disable",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "http_directory": "http",
+      "boot_command": [
+        "<enter><wait10><wait10>",
+        "curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/setup.sh<enter><wait>",
+        "sh setup.sh http://{{ .HTTPIP }}:{{ .HTTPPort }}<enter>"
+      ],
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"],
+        ["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"],
+        ["modifyvm", "{{.Name}}", "--draganddrop", "bidirectional"],
+        ["modifyvm", "{{.Name}}", "--vram", "128"],
+        ["modifyvm", "{{.Name}}", "--accelerate3d", "on"]
+      ],
+      "shutdown_command": "sudo shutdown -h now",
+      "vm_name": "arch_x64"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/vagrant.sh",
+        "scripts/vbox.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "arch_x64.box"
+    }
+  ]
+}
