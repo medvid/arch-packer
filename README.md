@@ -6,11 +6,11 @@
 ## 32-bit guest
 
 ```sh
-packer build arch_x32.json
-vagrant box remove arch_x32 # for update
-vagrant box add arch_x32 arch_x32.box
-vagrant up
-vagrant ssh
+packer build arch_x86.json
+vagrant box remove arch_x86 # for update
+vagrant box add arch_x86 arch_x86.box
+vagrant up x86
+vagrant ssh x86
 # username: vagrant, password: vagrant
 ```
 
@@ -20,7 +20,7 @@ vagrant ssh
 packer build arch_x64.json
 vagrant box remove arch_x64 # for update
 vagrant box add arch_x64 arch_x64.box
-vagrant up
-vagrant ssh
+vagrant up x64
+vagrant ssh x64
 # username: vagrant, password: vagrant
 ```
