@@ -68,3 +68,26 @@ LINUX ../vmlinuz-linux
 APPEND root=/dev/sda2 rw
 INITRD ../initramfs-linux-fallback.img
 EOF
+
+# Virtualbox
+pacman --noconfirm -S virtualbox-guest-utils
+cat > /etc/modules-load.d/vbox.conf <<EOF
+vboxguest
+vboxsf
+vboxvideo
+EOF
+
+cat >> /etc/fstab <<EOF
+D_DRIVE /mnt/d vboxsf uid=root,gid=users,fmode=770,dmode=770,noauto,x-systemd.automount 0 0
+EOF
+
+mkdir -p -m770 /mnt/d
+
+systemctl daemon-reload
+systemctl enable vboxservice
+
+# Base packages
+pacman -S --noconfirm mc zsh
+
+# Development packages
+pacman  -S --noconfirm base-devel ack gdb git
