@@ -184,6 +184,6 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
   libreoffice-writer libreoffice-en-US
 
 # Packages from local repository
-pacman -Sy --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
-  hunspell-uk hyphen-ru hyphen-uk rxvt-unicode-patched simpleswitcher-git \
-  trayer-srg
+# pacman -Sy --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
+#   hunspell-uk hyphen-ru hyphen-uk rxvt-unicode-patched simpleswitcher-git \
+#   trayer-srg
