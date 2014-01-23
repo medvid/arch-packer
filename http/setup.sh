@@ -3,22 +3,14 @@ set -ex
 http_root="$1"
 shift
 
-# set preferred mirror
-# passed to sed expression, so should escape '/' and '$'
-MIRROR="http:\/\/ftp.linux.kiev.ua\/pub\/Linux\/ArchLinux\/\$repo\/os\/\$arch"
-
-# size of swap partition
-SWAPSIZE=512M
-
 # partitioning
-# /dev/sda1 swap SWAPSIZE
 fdisk /dev/sda <<EOF
 o
 n
 p
 1
 
-+$SWAPSIZE
++512M
 t
 82
 n
@@ -40,11 +32,40 @@ mkfs.ext4 -m 1 -q -L root /dev/sda2
 swapon /dev/sda1
 mount /dev/sda2 /mnt
 
-# insert preferred mirror after the first empty line in mirrorlist
-sed -i "0,/^$/s//\nServer = $MIRROR\n/" /etc/pacman.d/mirrorlist
+# Add package signing key
+pacman-key -r 95A453CD
+pacman-key --lsign-key 95A453CD
 
-pacstrap /mnt base
+# Disable all repositories
+sed -i -e 's/^\([^#]\)/#\1/g' /etc/pacman.d/mirrorlist
+
+# TODO sign local packages
+cat >> /etc/pacman.d/mirrorlist <<EOF
+SigLevel = Never
+Server = $http_root/\$arch
+Server = http://ftp.linux.kiev.ua/pub/Linux/ArchLinux/\$repo/os/\$arch
+Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch
+Server = http://ftp.mfa.kfki.hu/pub/mirrors/ftp.archlinux.org/\$repo/os/\$arch
+Server = http://mir.archlinux.fr/\$repo/os/\$arch
+Server = http://ftp5.gwdg.de/pub/linux/archlinux/\$repo/os/\$arch
+Server = http://ftp.tu-chemnitz.de/pub/linux/archlinux/\$repo/os/\$arch
+Server = http://ftp.eenet.ee/pub/archlinux/\$repo/os/\$arch
+Server = http://mirror.aarnet.edu.au/pub/archlinux/\$repo/os/\$arch
+Server = http://ftp.heanet.ie/mirrors/ftp.archlinux.org/\$repo/os/\$arch
+Server = http://mirror.nl.leaseweb.net/archlinux/\$repo/os/\$arch
+Server = http://ftp.nluug.nl/pub/os/Linux/distr/archlinux/\$repo/os/\$arch
+EOF
+
+pacstrap /mnt base base-devel
 genfstab -p /mnt >> /mnt/etc/fstab
+
+# Add local repository
+cat >> /mnt/etc/pacman.conf <<EOF
+
+[local]
+SigLevel = Never
+Server = $http_root/\$arch
+EOF
 
 setup_chroot=/root/setup-chroot.sh
 curl -o /mnt/$setup_chroot "$http_root/setup-chroot.sh"

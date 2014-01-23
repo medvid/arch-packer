@@ -3,4 +3,6 @@
 * run `pacman -C` after provisioning
 * multilib-devel
 * insert mkinitcpio hooks
-* parse args in Vagrantfile
+* multilib-devel
+    * add repo
+    * replace packages from base-devel silently
