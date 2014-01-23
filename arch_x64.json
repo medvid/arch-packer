@@ -28,6 +28,15 @@
       "vm_name": "arch_x64"
     }
   ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/vagrant.sh",
+        "scripts/network.sh"
+      ]
+    }
+  ],
   "post-processors": [
     {
       "type": "vagrant",

@@ -23,40 +23,6 @@ pacman -Sy
 ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 systemctl enable dhcpcd@eth0
 
-cat > /etc/systemd/system/network@.service <<EOF
-[Unit]
-Description=Network connectivity (%i)
-Wants=network.target
-Before=network.target
-BindsTo=sys-subsystem-net-devices-%i.device
-After=sys-subsystem-net-devices-%i.device
-
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-EnvironmentFile=/etc/conf.d/network@%i
-
-ExecStart=/usr/bin/ip link set dev %i up
-ExecStart=/usr/bin/ip addr add \${address}/\${netmask} broadcast \${broadcast} dev %i
-ExecStart=/usr/bin/ip route add \${route} dev %i
-
-ExecStop=/usr/bin/ip addr flush dev %i
-ExecStop=/usr/bin/ip link set dev %i down
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-mkdir -p /etc/conf.d
-cat > /etc/conf.d/network@eth1 <<EOF
-address=192.168.56.10
-netmask=24
-broadcast=192.168.56.255
-route=192.168.56.0/24
-EOF
-
-systemctl enable network@eth1
-
 # SSH
 pacman -S --noconfirm openssh
 # Make sure SSH is allowed
@@ -129,11 +95,6 @@ useradd -m -g users vagrant
 echo -e 'vagrant\nvagrant\n' | passwd vagrant
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 chmod 0440 /etc/sudoers.d/vagrant
-
-mkdir -p -m700 ~vagrant/.ssh
-curl -o ~vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub
-chmod 600 ~vagrant/.ssh/authorized_keys
-chown -R vagrant ~vagrant/.ssh
 
 # Development packages
 pacman -S --noconfirm ack autogen bash-completion bashdb boost clang \
