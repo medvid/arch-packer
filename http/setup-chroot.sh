@@ -149,7 +149,7 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
 # Packages from local repository
 pacman -S --noconfirm bspwm cower dmenu-xft electricfence \
   hunspell-ru hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git \
-  rxvt-unicode-patched simpleswitcher-git sxhkd
+  numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git sxhkd
 
 # Remove local mirror
 sed -i '/^Server = http:\/\/10\./d' /etc/pacman.d/mirrorlist
