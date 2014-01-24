@@ -87,6 +87,12 @@ vagrant ssh x64
     ["modifyvm", "{{.Name}}", "--hwvirtex", "off"]
     ```
 
+  Also, you may need to set cpus number to 1:
+
+    ```js
+    ["modifyvm", "{{.Name}}", "--cpus", "1"]
+    ```
+
   More info [here][2].
 
 [1]: https://github.com/medvid/pkgbuild
