@@ -30,9 +30,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # vb.customize ["modifyvm", :id, "--hostonlyadapter2", "vboxnet0"]
     # vb.customize ["sharedfolder", "add", :id, "--name", "share", "--hostpath", "$HOME/share"]
   end
-
-  # config.vm.provision "shell", path: "scripts/base.sh"
-  # config.vm.provision "shell", path: "scripts/devel.sh"
-  # config.vm.provision "shell", path: "scripts/network.sh"
-  # config.vm.provision "shell", path: "scripts/user.sh"
 end
