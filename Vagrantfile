@@ -26,11 +26,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if (RUBY_PLATFORM =~ /mswin|mingw|cygwin/)
       vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"]
       vb.customize ["sharedfolder", "add", :id, "--name", "D_DRIVE", "--hostpath", "D:/"]
-      vb.provision "shell", path: "scripts/vbox-windows.sh"
     else
       vb.customize ["modifyvm", :id, "--hostonlyadapter2", "vboxnet0"]
       vb.customize ["sharedfolder", "add", :id, "--name", "SHARE", "--hostpath", "/mnt/share"]
-      vb.provision "shell", path: "scripts/vbox-linux.sh"
     end
+  end
+
+  if (RUBY_PLATFORM =~ /mswin|mingw|cygwin/)
+    config.vm.provision "shell", path: "scripts/vbox-windows.sh"
+  else
+    config.vm.provision "shell", path: "scripts/vbox-linux.sh"
   end
 end
