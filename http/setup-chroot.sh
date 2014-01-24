@@ -156,3 +156,11 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
 pacman -S --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
   hunspell-uk hyphen-ru hyphen-uk rxvt-unicode-patched simpleswitcher-git \
   sxhkd trayer-srg
+
+# Remove local mirror
+sed -i '/^Server = http:\/\/10\./d' /etc/pacman.d/mirrorlist
+# Replace local repository address
+sed -i '$d' /etc/pacman.conf
+cat >> /etc/pacman.conf <<EOF
+Server = /home/vmm/dev/projects/pkgbuild/\$repo/os/\$arch
+EOF
