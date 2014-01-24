@@ -25,6 +25,25 @@ vagrant ssh x64
 # username: vagrant, password: vagrant
 ```
 
+## Post-installation steps
+
+* Login as normal user (username: vmm, password: vmm)
+
+* Change user password
+
+* Install ssh keys
+
+* Install repositories
+
+    ```sh
+    git clone git://github.com:medvid/dotfiles.git ~/dev/projects/dotfiles
+    ~/dev/projects/dotfiles/install.sh
+    sudo tic ~/dev/projects/dotfiles/screen-256color-fix
+    git clone git://github.com:medvid/vimfiles.git ~/.vim
+    ```
+
+* Logout and login on tty1. Development environment is now ready.
+
 ## Tips & Tweaks
 
 * You can setup local repository mirror to avoid package downloading
@@ -36,14 +55,17 @@ vagrant ssh x64
   Please enter your GPG key ID in `http/setup.sh`.
 
 * I dont use AUR helpers. All AUR packages should be prebuilt in local
-  repository together with `local.db`. You can build them from
-  https://github.com/medvid/pkgbuild repository:
+  repository. You can build them from my [pkgbuild][1] repository:
 
     ```sh
-    git clone https://github.com/medvid/pkgbuild && cd pkgbuild
+    git clone https://github.com/medvid/pkgbuild.git && cd pkgbuild
+    # build packages
     ./build.sh
-    ./db.sh
     cp -nv local/os/$arch/* $this_repo/http/$arch
+    # build database
+    ./db.sh
+    cp local/os/$arch/local.db.tar.gz $this_repo/http/$arch/local.db
+    ```
 
   Don't forget to sign these packages.
 
@@ -65,4 +87,7 @@ vagrant ssh x64
     ["modifyvm", "{{.Name}}", "--hwvirtex", "off"]
     ```
 
-  More info [here](http://piotr.banaszkiewicz.org/blog/2012/06/10/vagrant-lack-of-hvirt/).
+  More info [here][2].
+
+[1]: https://github.com/medvid/pkgbuild
+[2]: http://piotr.banaszkiewicz.org/blog/2012/06/10/vagrant-lack-of-hvirt/
