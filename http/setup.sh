@@ -63,6 +63,7 @@ genfstab -p /mnt >> /mnt/etc/fstab
 cat >> /mnt/etc/pacman.conf <<EOF
 
 [local]
+SigLevel = Never
 Server = $http_root/\$arch
 EOF
 
