@@ -29,15 +29,15 @@ vagrant ssh x64
 
 * To disable annoying VirtualBox notifications forever:
 
-        VBoxManage setextradata global "GUI/SuppressMessages" "all"
+    VBoxManage setextradata global "GUI/SuppressMessages" "all"
 
   Please make sure VirtualBox is not running while executing this command.
 
 * If your processor does not support hardware virtualization (VT-x),
   you should add the following string to `arch_x86.json`:
 
-        ```js
-        ["modifyvm", "{{.Name}}", "--hwvirtex", "off"]
-        ```
+    ```js
+    ["modifyvm", "{{.Name}}", "--hwvirtex", "off"]
+    ```
 
   More info [here](http://piotr.banaszkiewicz.org/blog/2012/06/10/vagrant-lack-of-hvirt/).
