@@ -96,6 +96,14 @@ echo -e 'vagrant\nvagrant\n' | passwd vagrant
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 chmod 0440 /etc/sudoers.d/vagrant
 
+# Gnome-keyring
+pacman -S --noconfirm gnome-keyring libgnome-keyring
+sed -i -e '/auth[ \t]*include[ \t]*system-local-login/a \
+auth       optional     pam_gnome_keyring.so' /etc/pam.d/login
+sed -i -e '/session[ \t]*include[ \t]*system-local-login/a \
+session    optional     pam_gnome_keyring.so        auto_start' /etc/pam.d/login
+echo 'password        optional        pam_gnome_keyring.so' >> /etc/pam.d/passwd
+
 # Development packages
 pacman -S --noconfirm ack autogen bash-completion bashdb boost clang \
   clang-analyzer clang-tools-extra cmake ctags dash dejagnu doxygen gdb \
@@ -112,9 +120,9 @@ pacman -S --noconfirm dnsutils fping tcpdump traceroute vnstat whois
 
 # Utilities
 pacman -S --noconfirm antiword asciidoc antiword aria2 bc cabextract calc \
-  catdoc dos2unix graphviz htop imagemagick lesspipe libgnome-keyring \
-  libnotify lsof lynx markdown mc mpg123 ranger rlwrap rsync sysstat tmux \
-  tree unrar unzip vifm vbindiff w3m wget xmlto zip
+  catdoc dos2unix graphviz htop imagemagick lesspipe libnotify lsof lynx \
+  markdown mc mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip \
+  vifm vbindiff w3m wget xmlto zip
 
 # Internationalization
 pacman -S --noconfirm aspell-en aspell-ru aspell-uk libmythes mythes-en \
@@ -131,8 +139,8 @@ pacman -S --noconfirm gtk-engine-murrine numix-themes xcursor-vanilla-dmz
 pacman -S --noconfirm xorg-server xorg-server-utils xorg-xinit
 
 # X utilities
-pacman -S --noconfirm dunst gmrun gnome-keyring numlockx slock unclutter \
-  wmctrl xautolock xdotool xorg-xev xorg-xprop xsel
+pacman -S --noconfirm dunst gmrun numlockx slock unclutter wmctrl \
+  xautolock xdotool xorg-xev xorg-xprop xsel
 
 # Applications
 pacman -S --noconfirm emacs feh firefox flashplugin gcolor2 gitg gnuplot \
@@ -145,6 +153,6 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
   libreoffice-writer libreoffice-en-US
 
 # Packages from local repository
-pacman -Sy --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
+pacman -S --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
   hunspell-uk hyphen-ru hyphen-uk rxvt-unicode-patched simpleswitcher-git \
-  trayer-srg
+  sxhkd trayer-srg
