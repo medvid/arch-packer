@@ -27,6 +27,14 @@ vagrant ssh x64
 
 ## Tips & Tweaks
 
+* You can setup local package mirror to avoid package downloading
+  everytime you run packer build. To do this, run `mirror.sh`
+  on existent Archlinux machine. Package mirror will be created
+  in `http/$arch` directory.
+
+* To update local package databases from server, please run
+  `db.sh` script.
+
 * To disable annoying VirtualBox notifications forever:
 
     ```sh
