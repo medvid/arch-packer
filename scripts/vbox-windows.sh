@@ -6,3 +6,4 @@ D_DRIVE /mnt/d vboxsf uid=root,gid=users,fmode=770,dmode=770,noauto,x-systemd.au
 EOF'
 
 sudo mkdir -p -m770 /mnt/d
+sudo chown root:users /mnt/d

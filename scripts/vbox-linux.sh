@@ -6,3 +6,4 @@ SHARE /mnt/share vboxsf uid=root,gid=users,fmode=770,dmode=770,noauto,x-systemd.
 EOF'
 
 sudo mkdir -p -m770 /mnt/share
+sudo chown root:users /mnt/share
