@@ -162,5 +162,5 @@ sed -i '/^Server = http:\/\/10\./d' /etc/pacman.d/mirrorlist
 # Replace local repository address
 sed -i '$d' /etc/pacman.conf
 cat >> /etc/pacman.conf <<EOF
-Server = /home/vmm/dev/projects/pkgbuild/\$repo/os/\$arch
+Server = file:///home/vmm/dev/projects/pkgbuild/\$repo/os/\$arch
 EOF
