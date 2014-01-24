@@ -6,7 +6,7 @@
       "iso_url": "http://ftp.linux.kiev.ua/pub/Linux/ArchLinux/iso/2014.01.05/archlinux-2014.01.05-dual.iso",
       "iso_checksum": "4d43709987c3cf19059195f9450465de3b87a5cb",
       "iso_checksum_type": "sha1",
-      "disk_size": 8000,
+      "disk_size": 40000,
       "guest_additions_mode": "disable",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
