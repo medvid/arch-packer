@@ -71,12 +71,6 @@ vboxsf
 vboxvideo
 EOF
 
-cat >> /etc/fstab <<EOF
-D_DRIVE /mnt/d vboxsf uid=root,gid=users,fmode=770,dmode=770,noauto,x-systemd.automount 0 0
-EOF
-
-mkdir -p -m770 /mnt/d
-
 systemctl enable vboxservice
 
 # User account
@@ -154,7 +148,7 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
 
 # Packages from local repository
 pacman -S --noconfirm bspwm cower dmenu-xft electricfence \
-  numix-icon-theme-git hunspell-ru hunspell-uk hyphen-ru hyphen-uk \
+  hunspell-ru hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git \
   rxvt-unicode-patched simpleswitcher-git sxhkd
 
 # Remove local mirror

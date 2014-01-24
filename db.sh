@@ -5,12 +5,12 @@ http_root=`dirname $0`/http
 mirror="http://ftp.linux.kiev.ua/pub/Linux/ArchLinux"
 
 get_db() {
-local repo=$1
-local arch=$2
-local dir=$http_root/$arch
+  local repo=$1
+  local arch=$2
+  local dir=$http_root/$arch
 
-mkdir -p $dir
-wget $mirror/$repo/os/$arch/$repo.db -O $dir/$repo.db
+  mkdir -p $dir
+  wget $mirror/$repo/os/$arch/$repo.db -O $dir/$repo.db
 }
 
 for repo in core extra community; do
