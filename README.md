@@ -41,4 +41,5 @@ vagrant ssh x64
     ```js
     ["modifyvm", "{{.Name}}", "--hwvirtex", "off"]
     ```
+
   More info [here](http://piotr.banaszkiewicz.org/blog/2012/06/10/vagrant-lack-of-hvirt/).
