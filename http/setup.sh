@@ -41,6 +41,7 @@ sed -i -e 's/^\([^#]\)/#\1/g' /etc/pacman.d/mirrorlist
 
 # TODO sign local packages
 cat >> /etc/pacman.d/mirrorlist <<EOF
+SigLevel = Never
 Server = $http_root/\$arch
 Server = http://ftp.linux.kiev.ua/pub/Linux/ArchLinux/\$repo/os/\$arch
 Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch
@@ -59,12 +60,12 @@ pacstrap /mnt base base-devel
 genfstab -p /mnt >> /mnt/etc/fstab
 
 # Add local repository
-# cat >> /mnt/etc/pacman.conf <<EOF
-#
-# [local]
-# SigLevel = Never
-# Server = $http_root/\$arch
-# EOF
+cat >> /mnt/etc/pacman.conf <<EOF
+
+[local]
+SigLevel = Never
+Server = $http_root/\$arch
+EOF
 
 setup_chroot=/root/setup-chroot.sh
 curl -o /mnt/$setup_chroot "$http_root/setup-chroot.sh"

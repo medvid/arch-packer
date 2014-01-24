@@ -24,7 +24,7 @@
         ["modifyvm", "{{.Name}}", "--vram", "128"],
         ["modifyvm", "{{.Name}}", "--accelerate3d", "on"]
       ],
-      "shutdown_command": "sudo shutdown -h now",
+      "shutdown_command": "sudo poweroff",
       "vm_name": "arch_x64"
     }
   ],

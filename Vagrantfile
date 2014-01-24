@@ -23,8 +23,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.gui = true
 
     vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
-    # vb.customize ["sharedfolder", "add", :id, "--name", "D_DRIVE", "--hostpath", "D:/"]
-    vb.customize ["sharedfolder", "add", :id, "--name", "share", "--hostpath", "$HOME/share"]
+    vb.customize ["sharedfolder", "add", :id, "--name", "D_DRIVE", "--hostpath", "D:/"]
+    # vb.customize ["sharedfolder", "add", :id, "--name", "share", "--hostpath", "$HOME/share"]
   end
 
   # config.vm.provision "shell", path: "scripts/base.sh"
