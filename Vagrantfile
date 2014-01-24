@@ -23,7 +23,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.gui = true
 
     vb.customize ["modifyvm", :id, "--nic2", "hostonly"]
+    # Windows
+    vb.customize ["modifyvm", :id, "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter"]
     vb.customize ["sharedfolder", "add", :id, "--name", "D_DRIVE", "--hostpath", "D:/"]
+    # Linux
+    # vb.customize ["modifyvm", :id, "--hostonlyadapter2", "vboxnet0"]
     # vb.customize ["sharedfolder", "add", :id, "--name", "share", "--hostpath", "$HOME/share"]
   end
 
