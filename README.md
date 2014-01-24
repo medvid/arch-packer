@@ -27,10 +27,25 @@ vagrant ssh x64
 
 ## Tips & Tweaks
 
-* You can setup local package mirror to avoid package downloading
+* You can setup local repository mirror to avoid package downloading
   everytime you run packer build. To do this, run `mirror.sh`
   on existent Archlinux machine. Package mirror will be created
   in `http/$arch` directory.
+
+* You should sign all packages in local mirror with `sign.sh`.
+  Please enter your GPG key ID in `http/setup.sh`.
+
+* I dont use AUR helpers. All AUR packages should be prebuilt in local
+  repository together with `local.db`. You can build them from
+  https://github.com/medvid/pkgbuild repository:
+
+    ```sh
+    git clone https://github.com/medvid/pkgbuild && cd pkgbuild
+    ./build.sh
+    ./db.sh
+    cp -nv local/os/$arch/* $this_repo/http/$arch
+
+  Don't forget to sign these packages.
 
 * To update local package databases from server, please run
   `db.sh` script.

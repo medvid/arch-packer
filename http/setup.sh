@@ -33,15 +33,15 @@ swapon /dev/sda1
 mount /dev/sda2 /mnt
 
 # Add package signing key
-pacman-key -r 95A453CD
-pacman-key --lsign-key 95A453CD
+keyid=95A453CD
+pacman-key -r $keyid
+pacman-key --lsign-key $keyid
 
 # Disable all repositories
 sed -i -e 's/^\([^#]\)/#\1/g' /etc/pacman.d/mirrorlist
 
-# TODO sign local packages
+# Add local repository + 10 fastest mirrors
 cat >> /etc/pacman.d/mirrorlist <<EOF
-SigLevel = Never
 Server = $http_root/\$arch
 Server = http://ftp.linux.kiev.ua/pub/Linux/ArchLinux/\$repo/os/\$arch
 Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch
@@ -63,7 +63,6 @@ genfstab -p /mnt >> /mnt/etc/fstab
 cat >> /mnt/etc/pacman.conf <<EOF
 
 [local]
-SigLevel = Never
 Server = $http_root/\$arch
 EOF
 
