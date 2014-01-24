@@ -153,9 +153,9 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
   libreoffice-writer libreoffice-en-US
 
 # Packages from local repository
-pacman -S --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
-  hunspell-uk hyphen-ru hyphen-uk rxvt-unicode-patched simpleswitcher-git \
-  sxhkd trayer-srg
+pacman -S --noconfirm bspwm cower dmenu-xft electricfence \
+  numix-icon-theme-git hunspell-ru hunspell-uk hyphen-ru hyphen-uk \
+  rxvt-unicode-patched simpleswitcher-git sxhkd trayer-srg
 
 # Remove local mirror
 sed -i '/^Server = http:\/\/10\./d' /etc/pacman.d/mirrorlist
