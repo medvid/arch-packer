@@ -40,7 +40,4 @@ VBoxManage setextradata global "GUI/SuppressMessages" "all"
 ["modifyvm", "{{.Name}}", "--hwvirtex", "off"]
 ```
 
-However, this does not help on my processor
-[Intel® Pentium® Dual-Crap E2200](http://ark.intel.com/products/33925).
-
-More info [here](http://piotr.banaszkiewicz.org/blog/2012/06/10/vagrant-lack-of-hvirt/).
+  More info [here](http://piotr.banaszkiewicz.org/blog/2012/06/10/vagrant-lack-of-hvirt/).
