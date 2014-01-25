@@ -37,4 +37,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   else
     config.vm.provision "shell", path: "scripts/vbox-linux.sh"
   end
+
+  config.vm.provision "shell", path: "scripts/network.sh"
 end
