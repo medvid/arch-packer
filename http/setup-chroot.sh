@@ -133,8 +133,8 @@ pacman -S --noconfirm gtk-engine-murrine numix-themes xcursor-vanilla-dmz
 pacman -S --noconfirm xorg-server xorg-server-utils xorg-xinit
 
 # X utilities
-pacman -S --noconfirm dunst gmrun numlockx tint2 unclutter wmctrl xdotool \
-  xorg-xev xorg-xprop xsel
+pacman -S --noconfirm dunst gmrun hsetroot numlockx tint2 unclutter \
+  wmctrl xdotool xorg-xev xorg-xprop xsel
 
 # Applications
 pacman -S --noconfirm emacs feh firefox flashplugin gcolor2 gitg gnuplot \
