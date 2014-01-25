@@ -133,8 +133,8 @@ pacman -S --noconfirm gtk-engine-murrine numix-themes xcursor-vanilla-dmz
 pacman -S --noconfirm xorg-server xorg-server-utils xorg-xinit
 
 # X utilities
-pacman -S --noconfirm dunst gmrun numlockx slock tint2 unclutter wmctrl \
-  xautolock xdotool xorg-xev xorg-xprop xsel
+pacman -S --noconfirm dunst gmrun numlockx tint2 unclutter wmctrl xdotool \
+  xorg-xev xorg-xprop xsel
 
 # Applications
 pacman -S --noconfirm emacs feh firefox flashplugin gcolor2 gitg gnuplot \
@@ -147,8 +147,8 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
   libreoffice-writer libreoffice-en-US
 
 # Packages from local repository
-pacman -S --noconfirm bspwm cower dmenu-xft electricfence \
-  hunspell-ru hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git \
+pacman -S --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
+  hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git
   numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git sxhkd
 
 # Remove local mirror
