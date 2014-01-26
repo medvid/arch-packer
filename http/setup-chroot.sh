@@ -133,12 +133,12 @@ pacman -S --noconfirm gtk-engine-murrine numix-themes xcursor-vanilla-dmz
 pacman -S --noconfirm xorg-server xorg-server-utils xorg-xinit
 
 # X utilities
-pacman -S --noconfirm dunst gmrun hsetroot numlockx tint2 unclutter \
-  wmctrl xdotool xorg-xev xorg-xprop xsel
+pacman -S --noconfirm gmrun hsetroot numlockx tint2 unclutter wmctrl \
+  xdotool xorg-xev xorg-xprop xsel
 
 # Applications
-pacman -S --noconfirm emacs feh firefox flashplugin gcolor2 gitg gnuplot \
-  gucharmap gvim meld p7zip qtcreator sbxkb seahorse spacefm sxiv zathura \
+pacman -S --noconfirm firefox flashplugin gcolor2 gitg gnuplot gucharmap \
+  gvim meld p7zip qtcreator sbxkb seahorse spacefm sxiv zathura \
   zathura-djvu zathura-pdf-poppler zathura-ps
 
 # Libreoffice
@@ -149,7 +149,8 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
 # Packages from local repository
 pacman -S --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
   hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git
-  numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git sxhkd
+  numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git sxhkd \
+  tmwn-git
 
 # Remove local mirror
 sed -i '/^Server = http:\/\/10\./d' /etc/pacman.d/mirrorlist
