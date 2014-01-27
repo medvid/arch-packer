@@ -116,7 +116,7 @@ pacman -S --noconfirm dnsutils fping tcpdump traceroute vnstat whois
 pacman -S --noconfirm antiword asciidoc antiword aria2 bc cabextract calc \
   catdoc dos2unix graphviz htop imagemagick lesspipe libnotify lsof lynx \
   markdown mc mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip \
-  vifm vbindiff w3m wget xmlto zip
+  vifm vbindiff w3m wget xdg-user-dirs xmlto zip
 
 # Internationalization
 pacman -S --noconfirm aspell-en aspell-ru aspell-uk libmythes mythes-en \
