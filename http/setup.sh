@@ -42,7 +42,9 @@ sed -i -e 's/^\([^#]\)/#\1/g' /etc/pacman.d/mirrorlist
 
 # Add local repository + 10 fastest mirrors
 cat >> /etc/pacman.d/mirrorlist <<EOF
+SigLevel = Optional TrustAll
 Server = $http_root/\$arch
+SigLevel = Required DatabaseOptional
 Server = http://ftp.linux.kiev.ua/pub/Linux/ArchLinux/\$repo/os/\$arch
 Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch
 Server = http://ftp.mfa.kfki.hu/pub/mirrors/ftp.archlinux.org/\$repo/os/\$arch
@@ -63,7 +65,7 @@ genfstab -p /mnt >> /mnt/etc/fstab
 cat >> /mnt/etc/pacman.conf <<EOF
 
 [local]
-SigLevel = Never
+SigLevel = Optional TrustAll
 Server = $http_root/\$arch
 EOF
 

@@ -78,14 +78,14 @@ user=vmm
 password=vmm
 
 pacman -S --noconfirm sudo zsh
-useradd -m -g users -s /usr/bin/zsh $user
+useradd -m -g users -G vboxsf -s /usr/bin/zsh $user
 echo -e "$password\n$password\n" | passwd $user
 echo "$user ALL=(ALL) ALL" > /etc/sudoers.d/$user
 chmod 0440 /etc/sudoers.d/$user
 
 # Vagrant
 echo -e 'vagrant\nvagrant\n' | passwd
-useradd -m -g users vagrant
+useradd -m -g users -G vboxsf vagrant
 echo -e 'vagrant\nvagrant\n' | passwd vagrant
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 chmod 0440 /etc/sudoers.d/vagrant
@@ -148,9 +148,12 @@ pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
 
 # Packages from local repository
 pacman -S --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
-  hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git
+  hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git \
   numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git sxhkd \
-  tmwn-git
+  twmn-git
+
+# Cleanup pacman cache to reduce image size
+pacman -Sc --noconfirm
 
 # Remove local mirror
 sed -i '/^Server = http:\/\/10\./d' /etc/pacman.d/mirrorlist
