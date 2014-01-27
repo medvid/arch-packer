@@ -17,6 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     x64.vm.provider :virtualbox do |vb|
       vb.name = "arch_x64_20"
     end
+    x64.vm.provision "shell", path: "scripts/multilib.sh"
   end
 
   config.vm.provider :virtualbox do |vb|
