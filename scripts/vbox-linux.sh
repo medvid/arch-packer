@@ -1,9 +1,9 @@
 #!/bin/sh
 set -x
 
-sudo sh -c 'cat >> /etc/fstab <<EOF
+cat >> /etc/fstab <<EOF
 SHARE /mnt/share vboxsf uid=root,gid=users,fmode=770,dmode=770,noauto,x-systemd.automount 0 0
-EOF'
+EOF
 
-sudo mkdir -p -m770 /mnt/share
-sudo chown root:users /mnt/share
+mkdir -p -m770 /mnt/share
+chown root:users /mnt/share

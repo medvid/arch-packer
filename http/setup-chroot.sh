@@ -21,7 +21,14 @@ pacman -Sy
 # Network
 # disable persistent network names
 ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
-systemctl enable dhcpcd@eth0
+cat > /etc/netctl/eth0 << EOF
+Description='DHCP ethernet connection'
+Interface=eth0
+Connection=ethernet
+IP=dhcp
+IP6=no
+EOF
+netctl enable eth0
 
 # SSH
 pacman -S --noconfirm openssh
@@ -35,7 +42,7 @@ systemctl enable sshd
 
 # Bootloader
 pacman -S --noconfirm syslinux
-cp -r /usr/lib/syslinux/bios/* /boot/syslinux
+cp /usr/lib/syslinux/bios/{menu.c32,memdisk,ldlinux.c32,libcom32.c32,libutil.c32} /boot/syslinux
 extlinux --install /boot/syslinux
 printf "\x2" | cat /usr/lib/syslinux/bios/altmbr.bin - | \
   dd bs=440 count=1 iflag=fullblock conv=notrunc of=/dev/sda
@@ -70,33 +77,15 @@ vboxguest
 vboxsf
 vboxvideo
 EOF
-
 systemctl enable vboxservice
 
-# User account
-user=vmm
-password=vmm
-
-pacman -S --noconfirm sudo zsh
-useradd -m -g users -G vboxsf -s /usr/bin/zsh $user
-echo -e "$password\n$password\n" | passwd $user
-echo "$user ALL=(ALL) ALL" > /etc/sudoers.d/$user
-chmod 0440 /etc/sudoers.d/$user
-
 # Vagrant
+pacman -S --noconfirm sudo
 echo -e 'vagrant\nvagrant\n' | passwd
 useradd -m -g users -G vboxsf vagrant
 echo -e 'vagrant\nvagrant\n' | passwd vagrant
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 chmod 0440 /etc/sudoers.d/vagrant
-
-# Gnome-keyring
-pacman -S --noconfirm gnome-keyring libgnome-keyring
-sed -i -e '/auth[ \t]*include[ \t]*system-local-login/a \
-auth       optional     pam_gnome_keyring.so' /etc/pam.d/login
-sed -i -e '/session[ \t]*include[ \t]*system-local-login/a \
-session    optional     pam_gnome_keyring.so        auto_start' /etc/pam.d/login
-echo 'password        optional        pam_gnome_keyring.so' >> /etc/pam.d/passwd
 
 # Development packages
 pacman -S --noconfirm ack autogen bash-completion bashdb boost clang \
@@ -116,7 +105,7 @@ pacman -S --noconfirm dnsutils fping tcpdump traceroute vnstat whois
 pacman -S --noconfirm antiword asciidoc antiword aria2 bc cabextract calc \
   catdoc dos2unix graphviz htop imagemagick lesspipe libnotify lsof lynx \
   markdown mc mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip \
-  vifm vbindiff w3m wget xdg-user-dirs xmlto zip
+  vifm vbindiff w3m wget xdg-user-dirs xmlto zip zsh
 
 # Internationalization
 pacman -S --noconfirm aspell-en aspell-ru aspell-uk libmythes mythes-en \
@@ -130,27 +119,24 @@ pacman -S --noconfirm ttf-bitstream-vera ttf-dejavu ttf-droid \
 pacman -S --noconfirm gtk-engine-murrine numix-themes xcursor-vanilla-dmz
 
 # Xorg
-pacman -S --noconfirm xorg-server xorg-server-utils xorg-xinit
+pacman -S --noconfirm xorg-server xorg-server-utils
+
+# LightDM
+pacman -S --noconfirm lightdm lightdm-gtk3-greeter
 
 # X utilities
-pacman -S --noconfirm gmrun hsetroot numlockx tint2 unclutter wmctrl \
-  xdotool xorg-xev xorg-xprop xsel
+pacman -S --noconfirm awesome gmrun numlockx xorg-xprop xsel
 
 # Applications
-pacman -S --noconfirm firefox flashplugin gcolor2 gitg gnuplot gucharmap \
-  gvim meld p7zip qtcreator sbxkb seahorse spacefm sxiv zathura \
-  zathura-djvu zathura-pdf-poppler zathura-ps
-
-# Libreoffice
-pacman -S --noconfirm libreoffice-base libreoffice-calc libreoffice-common \
-  libreoffice-draw libreoffice-gnome libreoffice-impress libreoffice-math \
-  libreoffice-writer libreoffice-en-US
+pacman -S --noconfirm firefox flashplugin gcolor2 gitg gnuplot \
+  gnome-keyring gucharmap gvim libgnome-keyring meld p7zip qtcreator \
+  seahorse spacefm sxiv zathura zathura-djvu zathura-pdf-poppler zathura-ps
 
 # Packages from local repository
-pacman -S --noconfirm bspwm cower dmenu-xft electricfence hunspell-ru \
+pacman -S --noconfirm cower dmenu-xft electricfence hunspell-ru \
   hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git \
-  numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git sxhkd \
-  twmn-git
+  numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git \
+  termite-git
 
 # Cleanup pacman cache to reduce image size
 pacman -Sc --noconfirm

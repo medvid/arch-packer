@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     x64.vm.provider :virtualbox do |vb|
       vb.name = "arch_x64_20"
     end
-    x64.vm.provision "shell", path: "scripts/multilib.sh"
+    x64.vm.provision "shell", path: "scripts/multilib.sh", priviledged: true
   end
 
   config.vm.provider :virtualbox do |vb|
@@ -34,10 +34,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   if (RUBY_PLATFORM =~ /mswin|mingw|cygwin/)
-    config.vm.provision "shell", path: "scripts/vbox-windows.sh"
+    config.vm.provision "shell", path: "scripts/vbox-windows.sh", privileged: true
   else
-    config.vm.provision "shell", path: "scripts/vbox-linux.sh"
+    config.vm.provision "shell", path: "scripts/vbox-linux.sh", privileged: true
   end
 
-  config.vm.provision "shell", path: "scripts/network.sh"
+  config.vm.provision "shell", path: "scripts/network.sh", privileged: true
+  config.vm.provision "shell", path: "scripts/user.sh", privileged: true
 end

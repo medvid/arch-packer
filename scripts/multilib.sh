@@ -2,7 +2,7 @@
 set -x
 
 # Uncomment multilib repository in pacman.conf
-sudo awk -i inplace '
+awk -i inplace '
 /^#\[multilib\]/{s=1}
 s>0{sub("^#","");s++}
 s==3{s=0}
@@ -18,4 +18,4 @@ s==3{s=0}
 #   - gcc (y)
 #   - libtool (y)
 #   - pacman summary (y)
-echo -ne '\ny\ny\ny\ny\ny\n' | sudo pacman -Sy multilib-devel
+echo -ne '\ny\ny\ny\ny\ny\n' | pacman -Sy multilib-devel
