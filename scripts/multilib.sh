@@ -11,11 +11,10 @@ s==3{s=0}
 
 # Install multilib-devel group, replacing packages from base-devel
 # --noconfirm does not work here
-# 6 confirmations should be done:
+# 5 confirmations should be done:
 #   - select all packages in group (RET)
-#   - binutils (y)
 #   - gcc-libs (y)
 #   - gcc (y)
 #   - libtool (y)
 #   - pacman summary (y)
-echo -ne '\ny\ny\ny\ny\ny\n' | pacman -Sy multilib-devel
+echo -ne '\ny\ny\ny\ny\n' | pacman -Sy multilib-devel
