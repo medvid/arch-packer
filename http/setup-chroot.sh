@@ -102,10 +102,10 @@ pacman -S --noconfirm bash-docs gcc-docs linux-docs linux-howtos \
 pacman -S --noconfirm dnsutils fping tcpdump traceroute vnstat whois
 
 # Utilities
-pacman -S --noconfirm antiword asciidoc antiword aria2 bc cabextract calc \
-  catdoc dos2unix graphviz htop imagemagick lesspipe libnotify lsof lynx \
-  markdown mc mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip \
-  vifm vbindiff w3m wget xdg-user-dirs xmlto zip zsh
+pacman -S --noconfirm asciidoc antiword aria2 bc cabextract calc catdoc \
+  dos2unix htop imagemagick lesspipe libnotify lsof lynx markdown mc \
+  mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip vifm \
+  vbindiff w3m wget xdg-user-dirs xmlto zip zsh
 
 # Internationalization
 pacman -S --noconfirm aspell-en aspell-ru aspell-uk libmythes mythes-en \
@@ -116,27 +116,24 @@ pacman -S --noconfirm ttf-bitstream-vera ttf-dejavu ttf-droid \
   ttf-ubuntu-font-family
 
 # Themes
-pacman -S --noconfirm gtk-engine-murrine numix-themes xcursor-vanilla-dmz
+pacman -S --noconfirm numix-themes xcursor-vanilla-dmz
 
 # Xorg
-pacman -S --noconfirm xorg-server xorg-server-utils
-
-# LightDM
-pacman -S --noconfirm lightdm lightdm-gtk3-greeter
+pacman -S --noconfirm xorg-server xorg-server-utils xorg-xinit
 
 # X utilities
-pacman -S --noconfirm awesome gmrun numlockx xorg-xprop xsel
+pacman -S --noconfirm awesome gmrun numlockx vicious xorg-xprop xsel
 
 # Applications
 pacman -S --noconfirm firefox flashplugin gcolor2 gitg gnuplot \
-  gnome-keyring gucharmap gvim libgnome-keyring meld p7zip qtcreator \
-  seahorse spacefm sxiv zathura zathura-djvu zathura-pdf-poppler zathura-ps
+  gnome-keyring graphviz gucharmap gvim libgnome-keyring meld \
+  p7zip qtcreator seahorse spacefm sxiv zathura zathura-djvu \
+  zathura-pdf-poppler zathura-ps
 
 # Packages from local repository
 pacman -S --noconfirm cower dmenu-xft electricfence hunspell-ru \
   hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git \
-  numix-shine-icon-theme-git rxvt-unicode-patched simpleswitcher-git \
-  termite-git
+  numix-shine-icon-theme-git simpleswitcher-git termite-git
 
 # Cleanup pacman cache to reduce image size
 pacman -Sc --noconfirm
