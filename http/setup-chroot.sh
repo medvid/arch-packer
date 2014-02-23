@@ -2,7 +2,7 @@
 set -ex
 
 # Hostname
-echo arch.local > /etc/hostname
+echo arch > /etc/hostname
 
 # Timezone
 ln -s /usr/share/zoneinfo/Europe/Kiev /etc/localtime
@@ -103,9 +103,9 @@ pacman -S --noconfirm dnsutils fping tcpdump traceroute vnstat whois
 
 # Utilities
 pacman -S --noconfirm asciidoc antiword aria2 bc cabextract calc catdoc \
-  dos2unix htop imagemagick lesspipe libnotify lsof lynx markdown mc \
-  mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip vifm \
-  vbindiff w3m wget xdg-user-dirs xmlto zip zsh
+  dos2unix envoy htop imagemagick lesspipe libnotify lsof lynx markdown \
+  mc mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip vifm \
+  vbindiff w3m wget xmlto zip zsh
 
 # Internationalization
 pacman -S --noconfirm aspell-en aspell-ru aspell-uk libmythes mythes-en \
@@ -116,7 +116,7 @@ pacman -S --noconfirm ttf-bitstream-vera ttf-dejavu ttf-droid \
   ttf-ubuntu-font-family
 
 # Themes
-pacman -S --noconfirm numix-themes xcursor-vanilla-dmz
+pacman -S --noconfirm numix-themes
 
 # Xorg
 pacman -S --noconfirm xorg-server xorg-server-utils xorg-xinit
@@ -126,14 +126,12 @@ pacman -S --noconfirm awesome gmrun numlockx vicious xorg-xprop xsel
 
 # Applications
 pacman -S --noconfirm firefox flashplugin gcolor2 gitg gnuplot \
-  gnome-keyring graphviz gucharmap gvim libgnome-keyring meld \
-  p7zip qtcreator seahorse spacefm sxiv zathura zathura-djvu \
-  zathura-pdf-poppler zathura-ps
+  graphviz gucharmap gvim meld p7zip qtcreator spacefm sxiv \
+  zathura zathura-djvu zathura-pdf-poppler zathura-ps
 
 # Packages from local repository
 pacman -S --noconfirm cower dmenu-xft electricfence hunspell-ru \
-  hunspell-uk hyphen-ru hyphen-uk numix-icon-theme-git \
-  numix-shine-icon-theme-git simpleswitcher-git termite-git
+  hunspell-uk hyphen-ru hyphen-uk simpleswitcher-git termite-git
 
 # Cleanup pacman cache to reduce image size
 pacman -Sc --noconfirm
