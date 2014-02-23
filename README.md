@@ -38,8 +38,6 @@ vagrant ssh x64
     ```sh
     git clone git://github.com:medvid/dotfiles.git ~/dev/projects/dotfiles
     ~/dev/projects/dotfiles/install.sh
-    sudo tic ~/dev/projects/dotfiles/screen-256color-fix
-    git clone git://github.com:medvid/vimfiles.git ~/.vim
     ```
 
 * Logout and login on tty1. Development environment is now ready.
