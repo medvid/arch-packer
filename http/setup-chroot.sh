@@ -20,7 +20,7 @@ pacman -Sy
 
 # Network
 # disable persistent network names
-ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+ln -s /dev/null /etc/udev/rules.d/80-net-setup-link.rules
 cat > /etc/netctl/eth0 << EOF
 Description='DHCP ethernet connection'
 Interface=eth0
@@ -103,8 +103,8 @@ pacman -S --noconfirm dnsutils fping tcpdump traceroute vnstat whois
 
 # Utilities
 pacman -S --noconfirm asciidoc antiword aria2 bc cabextract calc catdoc \
-  dos2unix envoy htop imagemagick lesspipe libnotify lsof lynx markdown \
-  mc mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip vifm \
+  dos2unix htop imagemagick lesspipe libnotify lsof lynx markdown mc \
+  mpg123 ranger rlwrap rsync sysstat tmux tree unrar unzip vifm \
   vbindiff w3m wget xmlto zip zsh
 
 # Internationalization
@@ -126,8 +126,8 @@ pacman -S --noconfirm awesome gmrun numlockx vicious xorg-xprop xsel
 
 # Applications
 pacman -S --noconfirm firefox flashplugin gcolor2 gitg gnuplot \
-  graphviz gucharmap gvim meld p7zip qtcreator spacefm sxiv \
-  zathura zathura-djvu zathura-pdf-poppler zathura-ps
+  graphviz gucharmap gvim keychain meld p7zip qtcreator spacefm \
+  viewnior zathura zathura-djvu zathura-pdf-poppler zathura-ps
 
 # Packages from local repository
 pacman -S --noconfirm cower dmenu-xft electricfence hunspell-ru \
